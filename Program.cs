@@ -97,28 +97,28 @@ namespace c_linq
         //     new Customer(){ Name="Tina Fey", Balance=1000000.00, Bank="CITI"},
         //     new Customer(){ Name="Sid Brown", Balance=49582.68, Bank="CITI"}
         // };
-    /*
-        Given the same customer set, display how many millionaires per bank.
-        Ref: https://stackoverflow.com/questions/7325278/group-by-in-linq
 
-        Example Output:
-        WF 2
-        BOA 1
-        FTB 1
-        CITI 1
-    */
-    // List<BankReport> BankReport = (from customer in customers
-    //     group customer by customer.Bank into BankGroup
+        // Given the same customer set, display how many millionaires per bank.
+        // Ref: https://stackoverflow.com/questions/7325278/group-by-in-linq
+
+        // Example Output:
+        // WF 2
+        // BOA 1
+        // FTB 1
+        // CITI 1
+
+    //  List<BankReport> BankReport = (from customer in customers
+    //      group customer by customer.Bank into BankGroup
     //     select new BankReport {
-    //         BankName = BankGroup.Key,
-    //         CustomerCount = BankGroup.Count(num => num.Balance >= 1000000)
-    //     }
-    //     ).ToList();
-    //     foreach(BankReport bank in BankReport) {
-    //         Console.WriteLine($"{bank.BankName} has {bank.CustomerCount} millionaires");
-    //     }
+    //      BankName = BankGroup.Key,
+    //      CustomerCount = BankGroup.Count(num => num.Balance >= 1000000)
+    //      }
+    //      ).ToList();
+    //      foreach(BankReport bank in BankReport) {
+    //          Console.WriteLine($"{bank.BankName} has {bank.CustomerCount}");
+    //      }
 
-  // Create some banks and store in a List
+//   Create some banks and store in a List
         List<Bank> banks = new List<Bank>() {
             new Bank(){ Name="First Tennessee", Symbol="FTB"},
             new Bank(){ Name="Wells Fargo", Symbol="WF"},
@@ -151,7 +151,13 @@ namespace c_linq
                 public string BankName { get; set; }
             }
         */
-        List<ReportItem> millionaireReport = ...
+        List<ReportItem> millionaireReport = (from customer in customers
+        where customer.Balance >= 1000000
+        join bank in banks on customer.Bank equals bank.Symbol
+        select new ReportItem{
+            CustomerName = customer.Name,
+            BankName = bank.Name
+        }).ToList();
 
         foreach (var item in millionaireReport)
         {
